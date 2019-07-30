@@ -1,4 +1,4 @@
-package vehicles_fase2;
+package vehicles_fase3;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,20 +12,15 @@ public abstract class Vehicle {
 	protected String brand;
 	protected String color;
 	protected List<Wheel> wheels = new ArrayList<Wheel>();
-	protected List<Wheel> frontWheels = new ArrayList<Wheel>();
-	protected List<Wheel> backWheels = new ArrayList<Wheel>();
-
-	public Vehicle() {	
-	}
 	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((backWheels == null) ? 0 : backWheels.hashCode());
 		result = prime * result + ((brand == null) ? 0 : brand.hashCode());
 		result = prime * result + ((color == null) ? 0 : color.hashCode());
-		result = prime * result + ((frontWheels == null) ? 0 : frontWheels.hashCode());
+		result = prime * result + ((letras == null) ? 0 : letras.hashCode());
+		result = prime * result + ((numeros == null) ? 0 : numeros.hashCode());
 		result = prime * result + ((plate == null) ? 0 : plate.hashCode());
 		result = prime * result + ((wheels == null) ? 0 : wheels.hashCode());
 		return result;
@@ -40,11 +35,6 @@ public abstract class Vehicle {
 		if (getClass() != obj.getClass())
 			return false;
 		Vehicle other = (Vehicle) obj;
-		if (backWheels == null) {
-			if (other.backWheels != null)
-				return false;
-		} else if (!backWheels.equals(other.backWheels))
-			return false;
 		if (brand == null) {
 			if (other.brand != null)
 				return false;
@@ -55,10 +45,15 @@ public abstract class Vehicle {
 				return false;
 		} else if (!color.equals(other.color))
 			return false;
-		if (frontWheels == null) {
-			if (other.frontWheels != null)
+		if (letras == null) {
+			if (other.letras != null)
 				return false;
-		} else if (!frontWheels.equals(other.frontWheels))
+		} else if (!letras.equals(other.letras))
+			return false;
+		if (numeros == null) {
+			if (other.numeros != null)
+				return false;
+		} else if (!numeros.equals(other.numeros))
 			return false;
 		if (plate == null) {
 			if (other.plate != null)
@@ -73,21 +68,30 @@ public abstract class Vehicle {
 		return true;
 	}
 
+	private ArrayList<Character> numeros = new ArrayList<Character>();
+	private ArrayList<Character> letras = new ArrayList<Character>();
+	
+	public Vehicle() {	
+	}
+	
+	
+	
+	
+
 	public void setDatosVehiculo() {
 		System.out.println("Enter the vehicle brand");
 		brand = scanner.next();
+		do {
 		System.out.println("Enter the vehicle plate");
 		plate = scanner.next();
 		
 		char[] validarMatricula = new char[plate.length()];
-		ArrayList<Character> numeros = new ArrayList<Character>();
-		ArrayList<Character> letras = new ArrayList<Character>();
 		
-			if(plate.length()==6 || plate.length()==7) {
 				validarMatricula = plate.toCharArray();
-				
+				numeros.clear();
+				letras.clear();
 				for(int i=0; i<validarMatricula.length; i++) {
-					//System.out.println(validarMatricula[i]);
+					
 					if(validarMatricula[i]>='0' && validarMatricula[i]<='9') {
 						numeros.add(validarMatricula[i]);	
 					} 
@@ -95,20 +99,12 @@ public abstract class Vehicle {
 						letras.add(validarMatricula[i]);
 					}
 				}
-				System.out.println(numeros);
-				System.out.println(letras);
-				if(numeros.size()!= 4) {
-					System.out.println("The plate must have 4 numbers");
-					System.exit(0);
-				}else if(letras.size()!= 2 && letras.size()!= 3) {
-					System.out.println("The plate must have 2 or 3 letters");
-				}else {
-					System.out.println("Correct plate");
-				}
+				//System.out.println(numeros.size());
+				//System.out.println(letras.size());
 					
-			}else {
-					System.out.println("This plate is not correct");
-			}
+			}while((numeros.size()!= 4) || (letras.size()!= 2 && letras.size()!= 3));
+					
+			
 		System.out.println("Enter the vehicle color");
 		color = scanner.next();
 	}
